@@ -43,7 +43,7 @@ configureSpeech = function () {
             speechObject.localService = true;
             speechObject.voice = voices[i];
             speechObject.pitch = 1;
-            speechObject.rate = .9;
+            speechObject.rate = 1;
         }
     }
 
@@ -87,13 +87,13 @@ getLetterByNumber = function (number) {
     let letter = '';
 
     if (number >= 1 && number <= 15) {
-        letter = 'bêê';
+        letter = 'bê';
     }
     else if (number >= 16 && number <= 30) {
         letter = 'íí';
     }
     else if (number >= 31 && number <= 45) {
-        letter = 'N';
+        letter = 'êne';
     }
     else if (number >= 46 && number <= 60) {
         letter = 'G';
@@ -107,7 +107,7 @@ getLetterByNumber = function (number) {
 
 
 createDrawnSentence = function (letter, number) {
-    return `Letra: '${letter}' número ${number}`;
+    return `Letra: '${letter}'. Número ${number}.`;
 }
 
 createStartSentence = function () {
@@ -181,7 +181,7 @@ startBingo = function () {
             startSpeaking(funnySentence, 0.8);
         }
         startSpeaking(sentence, 0.8);
-        startSpeaking(letter + ' ' + number, 0.7);
+        startSpeaking(letter + '. ' + number + '.', 0.7);
     }
 }
 
