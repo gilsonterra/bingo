@@ -1,0 +1,17 @@
+body{
+    background-color: #f7f8f9;
+}
+
+.table-bordered{
+    background-color: #fff;
+}
+
+.table-bordered tr td, .table-bordered tr th {
+    border: solid 5px #f7f8f9;
+    text-align: center;
+    font-size: 28px;
+}
+
+.border-right-bold {
+    border-right: solid 20px #f7f8f9 !important;
+}
