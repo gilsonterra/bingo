@@ -1,6 +1,7 @@
 let SPEECH_OBJECT = null;
-let STORAGE_NAME_NUMBERS = 'numbers_bingo';
-let TIME_INTERVAL = 7000;
+let STORAGE_NAME_NUMBERS = 'numbers';
+let STORAGE_NAME_BINGO_NUMBERS = 'bingo_numbers';
+let TIME_INTERVAL = 8000;
 let BINGO_INTERVAL;
 
 setSpeechObject = function (speechObject) {
@@ -66,7 +67,7 @@ startSpeaking = function (line, rate) {
     window.speechSynthesis.speak(so);
 }
 
-generateBingoNumber = function (min, max) {
+generateRandom = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -147,6 +148,15 @@ createFunnySentence = function (number) {
             sentence = 'Coisa boa.'
             break;
 
+        case 10:
+        case 20:
+        case 30:
+        case 40:
+        case 50:
+        case 60:
+            sentence = `Raso ${number}.`;
+            break;
+
         case 70:
             sentence = 'Setenta, se não der você tenta de novo.'
             break;
@@ -161,28 +171,48 @@ highLigthTable = function () {
     });
 }
 
+createArrayRange = function (start, end) {
+    return new Array(end - start).fill().map((d, i) => i + start);
+}
+
+setBingoNumbers = function (numbers) {
+    setStorage(STORAGE_NAME_BINGO_NUMBERS, numbers);
+}
+
+getBingoNumbers = function () {
+    return getStorage(STORAGE_NAME_BINGO_NUMBERS);
+}
+
+removeBingoNumber = function () {
+    let bingoNumbers = getBingoNumbers();
+    let index = generateRandom(0, bingoNumbers.length - 1);
+    let numberLucky = bingoNumbers.splice(index, 1)[0];
+    setBingoNumbers(bingoNumbers);
+
+    return numberLucky;
+}
+
+
 startBingo = function () {
     let numbersDrawn = getNumbers();
-    let number = generateBingoNumber(1, 75);
+    let number = removeBingoNumber();
 
     console.log('número sorteado: ', number);
 
-    if (numbersDrawn.indexOf(number) < 0) {
-        numbersDrawn.push(number);
-        setNumbers(numbersDrawn);
-        highlightTablebyNumber(number);
-        showTotalNumbers();
+    numbersDrawn.push(number);
+    setNumbers(numbersDrawn);
+    highlightTablebyNumber(number);
+    showTotalNumbers();
 
-        let letter = getLetterByNumber(number);
-        let sentence = createDrawnSentence(letter, number);
-        let funnySentence = createFunnySentence(number);
+    let letter = getLetterByNumber(number);
+    let sentence = createDrawnSentence(letter, number);
+    let funnySentence = createFunnySentence(number);
 
-        if (funnySentence) {
-            startSpeaking(funnySentence, 0.8);
-        }
-        startSpeaking(sentence, 0.8);
-        startSpeaking(letter + '. ' + number + '.', 0.7);
+    if (funnySentence) {
+        startSpeaking(funnySentence, 0.8);
     }
+    startSpeaking(sentence, 0.8);
+    startSpeaking(letter + '. ' + number + '.', 0.7);
 }
 
 
@@ -217,6 +247,7 @@ repeatBingo = function () {
 
 finalizeBingo = function () {
     deleteStorage(STORAGE_NAME_NUMBERS);
+    deleteStorage(STORAGE_NAME_BINGO_NUMBERS);
     window.location.reload();
 }
 
@@ -233,6 +264,11 @@ window.speechSynthesis.onvoiceschanged = function () {
 }
 
 init = function () {
+    let bingoNumbers = getBingoNumbers();
+
+    if (!bingoNumbers || bingoNumbers.length == 0) {
+        setBingoNumbers(createArrayRange(1, 76));
+    }
     setSpeechObject(configureSpeech());
     showTotalNumbers();
     highLigthTable();
