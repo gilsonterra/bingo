@@ -256,7 +256,7 @@ initBingo = function () {
     startSpeaking(sentence);
     setTimeout(function () {
         BINGO_INTERVAL = setInterval(startBingo, TIME_INTERVAL);
-    }, TIME_INTERVAL);
+    }, 5000);
 }
 
 window.speechSynthesis.onvoiceschanged = function () {
