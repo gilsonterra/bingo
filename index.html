@@ -14,15 +14,7 @@
 <body>
     <div class="container">
         <div class="columns">
-            <div class="column col-4">
-                <div class="h2">Bingo da Vovó Cirila</div>
-            </div>
-            <div class="column col-3 text-right">
-                <p class="m-2">
-                    Total de números sorteados: <span class="text-dark text-bold h4" id="total-sorteado">0</span>
-                </p>
-            </div>
-            <div class="column col-5 text-right">
+            <div class="column col-12 text-right">
                 <p class="m-2">
                     <button class="btn btn-primary" type="button" onclick="initBingo()">Iniciar</button>
                     <button class="btn btn-secondary" type="button" onclick="pauseBingo()">Pausar</button> |
@@ -34,7 +26,7 @@
     </div>
     <hr>
     <div class="container">
-        <table id="tabela-bingo" class="table table-bordered text-right">
+        <table id="tabela-bingo" class="table table-bordered table-scroll text-right">
             <thead>
                 <tr class="text-right bg-gray">
                     <th colspan="2" class="border-right-bold">B</th>
@@ -138,6 +130,14 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="columns">
+        <div class="column col-12 text-right">
+            <p class="m-2">
+                Total de números sorteados: <span class="text-dark text-bold h4" id="total-sorteado">0</span>
+            </p>
+        </div>
     </div>
 
     <script src="script.js"></script>

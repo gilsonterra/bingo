@@ -9,7 +9,8 @@ body{
 .table-bordered tr td, .table-bordered tr th {
     border: solid 5px #f7f8f9;
     text-align: center;
-    font-size: 2.1vw;
+    /*font-size: 2.1vw;*/
+    font-size: 20px;
 }
 
 .border-right-bold {
